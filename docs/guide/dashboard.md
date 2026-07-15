@@ -1,51 +1,50 @@
-# Dashboard Guide
+# 儀表板操作指南
 
-The Lomall web dashboard provides a visual interface for managing tickets.
+Lomall 網頁儀表板提供視覺化的工單管理介面。
 
-## Access
+## 存取方式
 
-1. Run `/lomall dashboard` in Discord
-2. Click the provided link
-3. Sign in with Discord OAuth2
+1. 在 Discord 中執行 `/lomall dashboard`
+2. 點擊回傳的連結
+3. 使用 Discord 帳號進行 OAuth2 登入
 
-## Overview Page
+## 儀表板總覽
 
-The dashboard home shows:
+登入後的首頁顯示：
 
-- **Total Tickets** — All tickets across the server
-- **Open Tickets** — Currently active tickets
-- **Resolved Tickets** — Tickets awaiting confirmation
+- **總工單數** — 伺服器所有工單
+- **開啟中** — 當前活躍工單
+- **已解決** — 等待確認的工單
 
-Recent tickets are displayed for quick access.
+並列出最近工單供快速存取。
 
-## Ticket Management
+## 工單管理
 
-### Ticket List
+### 工單列表
 
-Filter tickets by status:
-- **All** — Every ticket
-- **Open** — Active tickets needing attention
-- **Resolved** — Tickets marked as resolved
-- **Closed** — Archived tickets
+可按狀態篩選工單：
+- **全部** — 所有工單
+- **開啟** — 需要處理的活躍工單
+- **已解決** — 已標記為解決的工單
+- **已關閉** — 已封存工單
 
-### Ticket Detail
+### 工單詳情
 
-Click any ticket to open the detail view:
+點擊工單進入詳情頁：
 
-- **Conversation Panel** — Full message history
-- **Reply Field** — Send messages directly to the Discord channel
-- **Status Controls** — Close or reopen tickets
-- **Assign** — Assign to a specific staff member
+- **對話面板** — 完整訊息歷史記錄
+- **回覆輸入框** — 直接發送訊息至 Discord 頻道
+- **狀態控制** — 關閉或重新開啟工單
+- **指派功能** — 指派給特定管理員
 
-## Messaging
+## 訊息功能
 
-Messages sent from the dashboard are delivered in real-time to the Discord ticket channel. Staff messages are visually distinguished from user messages.
+從儀表板發送的訊息會即時同步至 Discord 工單頻道。管理員的訊息會以「Staff」標記與使用者訊息區分。
 
-## Audit Logs
+## 審計日誌
 
-The audit logs page displays a chronological record of all actions:
-
-- Ticket creation, closure, and reopening
-- Assignments
-- Message deletions
-- Settings changes
+審計日誌頁面記錄所有操作的時序記錄：
+- 工單建立、關閉、重新開啟
+- 指派作業
+- 訊息刪除
+- 設定變更

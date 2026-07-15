@@ -1,11 +1,11 @@
-# Configuration
+# 環境設定
 
-All configuration is managed through environment variables.
+所有設定透過環境變數進行管理。
 
-## Environment Variables
+## 環境變數
 
 ```env
-# Database
+# 資料庫
 DATABASE_URL="postgresql://user:password@localhost:5432/lomall"
 
 # Discord
@@ -17,21 +17,21 @@ DISCORD_GUILD_ID="your_guild_id"
 # API
 API_PORT=4000
 
-# Web
+# 網頁
 NEXT_PUBLIC_API_URL="http://localhost:4000"
 NEXTAUTH_SECRET="your_secret_here"
 NEXTAUTH_URL="http://localhost:3000"
 WEB_URL="http://localhost:3000"
 ```
 
-## Guild Settings
+## 伺服器設定
 
-Configured via the dashboard or the `/lomall config` command:
+可透過儀表板或 `/lomall config` 指令修改：
 
-| Setting | Type | Default | Description |
-|---------|------|---------|-------------|
-| `sla` | number | 24 | SLA response time (hours) |
-| `autoClose` | boolean | true | Auto-close inactive tickets |
-| `autoCloseHours` | number | 48 | Hours before auto-close |
-| `categoryId` | string | null | Discord category for ticket channels |
-| `roles` | object | {} | Role-to-permission mapping |
+| 設定 | 型態 | 預設值 | 說明 |
+|------|------|--------|------|
+| `sla` | 數字（小時） | 24 | SLA 目標回應時間 |
+| `autoClose` | 布林值 | true | 是否自動關閉閒置工單 |
+| `autoCloseHours` | 數字（小時） | 48 | 閒置多久後自動關閉 |
+| `categoryId` | 字串 | null | 工單頻道所屬分類 ID |
+| `roles` | 物件 | {} | 角色與權限對應表 |

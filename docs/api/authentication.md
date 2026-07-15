@@ -1,48 +1,48 @@
-# Authentication
+# 認證機制
 
-Lomall uses Discord OAuth2 for authentication and issues JWT tokens for API access.
+Lomall 使用 Discord OAuth2 進行身份驗證，並簽發 JWT Token 供 API 存取。
 
-## Discord OAuth2 Flow
+## Discord OAuth2 流程
 
-### 1. Initiate Login
+### 1. 發起登入
 
-Redirect the user to:
+將使用者重新導向：
 
 ```
 GET /auth/discord
 ```
 
-This redirects to Discord's authorization page with `identify`, `email`, and `guilds` scopes.
+Discord 的授權頁面會要求 `identify`、`email` 與 `guilds` 權限。
 
-### 2. Callback
+### 2. 回呼處理
 
 ```
 GET /auth/discord/callback
 ```
 
-Discord redirects here after authorization. The API:
-- Creates or updates the user record
-- Issues a JWT token
-- Returns `{ token, user }`
+Discord 授權完成後重新導向至此。API 會：
+- 建立或更新使用者資料
+- 簽發 JWT Token
+- 回傳 `{ token, user }`
 
-### 3. Authenticated Requests
+### 3. 認證請求
 
-Include the JWT in the `Authorization` header:
+在 HTTP Header 帶入 JWT Token：
 
 ```
 Authorization: Bearer <token>
 ```
 
-## API Endpoints
+## API 端點
 
-### Get Current User
+### 取得當前使用者
 
 ```http
 GET /auth/me
 Authorization: Bearer <token>
 ```
 
-**Response:**
+**回應：**
 
 ```json
 {
@@ -54,8 +54,8 @@ Authorization: Bearer <token>
 }
 ```
 
-## Token Management
+## Token 管理
 
-- Tokens expire after **7 days**
-- Store the token securely (e.g., localStorage for web, environment for bot)
-- Re-authenticate to obtain a new token
+- Token 有效期為 **7 天**
+- 安全存放 Token（Web 使用 localStorage，Bot 使用環境變數）
+- 過期後需重新認證取得新 Token

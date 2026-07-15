@@ -1,40 +1,45 @@
-# Permission System
+# 權限管理系統
 
-Lomall integrates with Discord roles for granular permission control.
+Lomall 整合 Discord 角色系統，提供精細的權限控制。
 
-## Permission Levels
+## 權限層級
 
-| Level | Role | Capabilities |
-|-------|------|-------------|
-| **3** | Admin | Full access: manage settings, assign tickets, view all |
-| **2** | Support | Manage tickets, reply to conversations |
-| **1** | Viewer | Read-only access to tickets and audit logs |
+| 層級 | 角色 | 功能 |
+|------|------|------|
+| **3** | Admin（管理員） | 完整存取：管理設定、指派工單、檢視全部 |
+| **2** | Support（客服） | 管理工單、回覆對話 |
+| **1** | Viewer（檢視者） | 唯讀檢視工單與審計日誌 |
 
-## Configuration
+## 角色辨識
 
-### Via Discord
+Lomall 根據 Discord 角色名稱自動判斷權限：
 
-Role-based permissions are configured through the Discord server role settings and synchronized with Lomall.
+| 角色名稱包含 | 對應權限 |
+|-------------|---------|
+| `admin` | Admin |
+| `support` | Support |
+| `staff` | Support |
+| `viewer` | Viewer |
 
-### Via Dashboard
+## 頻道權限
 
-Admins can manage role mappings in the dashboard settings:
+當工單建立時，Lomall 自動設定以下 Discord 頻道權限：
 
-```json
-{
-  "roles": {
-    "admin_role_id": "admin",
-    "support_role_id": "support",
-    "viewer_role_id": "viewer"
-  }
-}
-```
+- **@everyone** — 拒絕存取
+- **工單建立者** — 檢視、發送訊息、讀取歷史
+- **管理員角色** — 檢視、發送訊息、管理頻道
+- **客服角色** — 檢視、發送訊息
 
-## Channel Permissions
+## 操作權限矩陣
 
-When a ticket is created, Lomall automatically sets Discord channel permissions:
-
-- **@everyone** — Denied access
-- **Ticket Creator** — Read, send messages, read history
-- **Admin Roles** — Read, send messages, manage channels
-- **Support Roles** — Read, send messages
+| 操作 | Admin | Support | Viewer | 一般成員 |
+|------|-------|---------|--------|---------|
+| 建立工單 | ✅ | ✅ | ✅ | ✅ |
+| 在自己的工單頻道發言 | ✅ | ✅ | ✅ | ✅ |
+| 檢視所有工單（儀表板） | ✅ | ✅ | ✅ | ❌ |
+| 回覆工單 | ✅ | ✅ | ❌ | ❌ |
+| 關閉工單 | ✅ | ✅ | ❌ | ❌ |
+| 重新開啟工單 | ✅ | ✅ | ❌ | ❌ |
+| 指派工單 | ✅ | ✅ | ❌ | ❌ |
+| 修改伺服器設定 | ✅ | ❌ | ❌ | ❌ |
+| 檢視審計日誌 | ✅ | ✅ | ✅ | ❌ |

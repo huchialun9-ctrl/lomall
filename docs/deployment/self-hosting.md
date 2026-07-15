@@ -1,44 +1,44 @@
-# Self-Hosting
+# 自架伺服器
 
-Deploy Lomall on your own infrastructure.
+在自己的基礎設施上部署 Lomall。
 
-## Production Build
+## 正式環境建置
 
 ```bash
-# Install dependencies
+# 安裝依賴
 npm install
 
-# Build shared package
+# 建置共用套件
 npm run build:shared
 
-# Build all applications
+# 建置所有應用程式
 npm run build:api
 npm run build:bot
 npm run build:web
 ```
 
-## Running with Process Manager
+## 使用行程管理工具
 
-We recommend using [PM2](https://pm2.keymetrics.io/):
+建議使用 [PM2](https://pm2.keymetrics.io/)：
 
 ```bash
 npm install -g pm2
 
-# Start services
+# 啟動服務
 pm2 start apps/api/dist/main.js --name lomall-api
 pm2 start apps/bot/dist/main.js --name lomall-bot
 pm2 start apps/web/node_modules/.bin/next --name lomall-web -- start -p 3000
 
-# Save process list
+# 儲存行程列表
 pm2 save
 pm2 startup
 ```
 
 ## Systemd
 
-Alternatively, create systemd service files for each component.
+亦可為各元件建立 systemd 服務。
 
-### Example: `/etc/systemd/system/lomall-api.service`
+### 範例：`/etc/systemd/system/lomall-api.service`
 
 ```ini
 [Unit]
@@ -57,12 +57,12 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-## Reverse Proxy
+## 反向代理
 
-Use Nginx or Caddy as a reverse proxy:
+使用 Nginx 或 Caddy 設定反向代理：
 
 ```nginx
-# Nginx configuration
+# Nginx 設定範例
 server {
     listen 80;
     server_name lomall.example.com;

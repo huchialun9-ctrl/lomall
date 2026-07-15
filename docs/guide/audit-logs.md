@@ -1,28 +1,27 @@
-# Audit Logs
+# 審計日誌
 
-Lomall records every action for full accountability.
+Lomall 記錄每一筆操作，確保完整的責任歸屬。
 
-## Tracked Actions
+## 記錄的動作
 
-| Action | Description |
-|--------|-------------|
-| `ticket_create` | A new ticket was created |
-| `ticket_close` | A ticket was closed |
-| `ticket_reopen` | A closed ticket was reopened |
-| `ticket_assign` | A ticket was assigned to a staff member |
-| `message_delete` | A message was removed |
-| `settings_update` | Server settings were modified |
+| 動作 | 說明 |
+|------|------|
+| `ticket_create` | 建立新工單 |
+| `ticket_close` | 關閉工單 |
+| `ticket_reopen` | 重新開啟已關閉的工單 |
+| `ticket_assign` | 指派工單給管理員 |
+| `message_delete` | 刪除訊息 |
+| `settings_update` | 修改伺服器設定 |
 
-## Viewing Logs
+## 檢視日誌
 
-### Web Dashboard
+### 網頁儀表板
 
-Navigate to **Audit Logs** in the sidebar. Each entry shows:
-
-- **User** — Who performed the action
-- **Action** — What was done
-- **Ticket** — Which ticket (if applicable)
-- **Timestamp** — When it happened
+在側邊欄點擊 **Audit Logs**。每筆記錄包含：
+- **使用者** — 執行操作的人
+- **動作** — 操作類型
+- **工單** — 關聯的工單（如適用）
+- **時間戳** — 操作時間
 
 ### API
 
@@ -31,8 +30,8 @@ GET /guilds/:discordId/audit-logs
 Authorization: Bearer <token>
 ```
 
-Returns the 100 most recent audit log entries.
+回傳最近 100 筆審計記錄。
 
-## Retention
+## 保存期限
 
-Audit logs are retained indefinitely in the database. Use the dashboard or API to export or purge logs as needed.
+審計日誌會永久保存於資料庫中。可透過儀表板或 API 匯出或清理舊記錄。

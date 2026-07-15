@@ -1,21 +1,21 @@
-# Tickets API
+# 工單 API
 
-All ticket endpoints require JWT authentication.
+所有工單端點需要 JWT 認證。
 
-## List Tickets
+## 列出工單
 
 ```http
 GET /tickets?guildId=<guildId>&status=<status>
 ```
 
-**Query Parameters:**
+**查詢參數：**
 
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `guildId` | string | Yes | Discord guild ID |
-| `status` | string | No | Filter: `open`, `resolved`, `closed` |
+| 參數 | 型態 | 必填 | 說明 |
+|------|------|------|------|
+| `guildId` | string | 是 | Discord 伺服器 ID |
+| `status` | string | 否 | 篩選：`open`、`resolved`、`closed` |
 
-**Response:**
+**回應：**
 
 ```json
 [
@@ -32,15 +32,21 @@ GET /tickets?guildId=<guildId>&status=<status>
 ]
 ```
 
-## Get Ticket
+## 取得單一工單
 
 ```http
 GET /tickets/:id
 ```
 
-Returns full ticket details with all messages.
+回傳完整的工單詳細資料與所有訊息。
 
-## Create Ticket
+## 依頻道 ID 查詢
+
+```http
+GET /tickets/channel/:channelId
+```
+
+## 建立工單
 
 ```http
 POST /tickets
@@ -48,51 +54,53 @@ Content-Type: application/json
 
 {
   "guildId": "discord_guild_id",
-  "subject": "Issue description",
+  "userId": "discord_user_id",
+  "subject": "問題描述",
   "category": "technical",
   "priority": "normal"
 }
 ```
 
-## Update Ticket Status
+## 更新工單狀態
 
 ```http
 PATCH /tickets/:id/close
 PATCH /tickets/:id/reopen
 ```
 
-## Assign Ticket
+## 指派工單
 
 ```http
 PATCH /tickets/:id/assign
 Content-Type: application/json
 
 {
-  "assignedTo": "user_id"
+  "assignedTo": "管理員名稱"
 }
 ```
 
-## Messages
+## 訊息管理
 
-### Send Message
+### 發送訊息
 
 ```http
 POST /tickets/:id/messages
 Content-Type: application/json
 
 {
-  "content": "Message text",
+  "userId": "discord_user_id",
+  "content": "訊息內容",
   "isStaff": true
 }
 ```
 
-### Get Messages
+### 取得訊息列表
 
 ```http
 GET /tickets/:id/messages
 ```
 
-## Update Channel ID
+## 更新頻道 ID
 
 ```http
 PATCH /tickets/:id/channel

@@ -1,53 +1,63 @@
-# Ticket Workflow
+# 工單生命週期
 
-Understanding the complete ticket lifecycle in Lomall.
+了解 Lomall 工單從建立到關閉的完整流程。
 
-## Lifecycle
+## 狀態流程
 
 ```
      ┌──────────┐
-     │  Open    │────── Ticket created, awaiting response
+     │  Open    │────── 工單建立，等待回覆
      └────┬─────┘
           │
      ┌────▼─────┐
-     │ Resolved │────── Issue addressed, pending confirmation
+     │ Resolved │────── 問題已處理，等待確認
      └────┬─────┘
           │
      ┌────▼─────┐
-     │  Closed  │────── Ticket archived with transcript
+     │  Closed  │────── 工單關閉，產生轉存檔
      └──────────┘
 ```
 
-## Step-by-Step
+## 逐步說明
 
-### 1. Creation
+### 1. 建立（Open）
 
-- User runs `/ticket create` with a subject and optional category
-- Lomall generates a private Discord channel
-- The ticket is logged in the database with status `open`
-- Staff are notified
+**觸發方式：**
+- 點擊「🎫 Create Ticket」按鈕並填寫 Modal 表單
+- 使用 `/ticket create` 指令
 
-### 2. Communication
+**系統處理：**
+- 建立 Discord 私密頻道，設定權限覆寫
+- 工單記錄寫入資料庫，狀態設為 `open`
+- 管理團隊收到通知
 
-- Staff and user communicate in the private channel
-- Messages sync to the web dashboard in real-time
-- Staff can also reply from the dashboard
+### 2. 溝通
 
-### 3. Resolution
+- 管理員與使用者在私密頻道中來回溝通
+- 所有訊息即時同步至網頁儀表板
+- 管理員也可從儀表板回覆，訊息自動推送至 Discord
 
-- Staff resolves the ticket when the issue is addressed
-- Status changes to `resolved`
-- The user is asked to confirm
+### 3. 解決（Resolved）
 
-### 4. Closure
+- 問題處理完畢後，管理員可將工單標記為 `resolved`
+- 使用者可確認問題是否確實解決
+- 如問題未解決可繼續對話
 
-- Tickets can be closed by staff or automatically after inactivity
-- An HTML transcript is generated and stored in the database
-- The Discord channel is archived
-- Status changes to `closed`
+### 4. 關閉（Closed）
 
-### 5. Reopening
+**觸發方式：**
+- 點擊工單頻道中的「🔒 Close Ticket」按鈕
+- 使用 `/ticket close` 指令
+- 從網頁儀表板關閉
+- 系統自動關閉（若啟用 autoClose）
 
-- Closed tickets can be reopened if the issue persists
-- A new Discord channel is created if needed
-- The original transcript remains accessible
+**系統處理：**
+- 工單狀態設為 `closed`
+- 自動產生 HTML 轉存檔（Transcript）儲存至資料庫
+- Discord 頻道自動刪除
+
+### 5. 重新開啟（Reopen）
+
+- 已關閉的工單可透過儀表板重新開啟
+- 狀態恢復為 `open`
+- 原始 Discord 頻道已刪除，需手動建立新頻道

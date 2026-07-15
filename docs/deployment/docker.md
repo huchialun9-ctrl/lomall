@@ -1,15 +1,15 @@
-# Docker Deployment
+# Docker 部署
 
-Deploy Lomall using Docker Compose.
+使用 Docker Compose 部署 Lomall。
 
-## Prerequisites
+## 前置需求
 
 - Docker 24+
 - Docker Compose 2.20+
 
-## Configuration
+## 設定檔
 
-Create a `docker-compose.yml`:
+建立 `docker-compose.yml`：
 
 ```yaml
 version: '3.8'
@@ -68,7 +68,7 @@ volumes:
   pgdata:
 ```
 
-## Run
+## 啟動
 
 ```bash
 docker compose up -d

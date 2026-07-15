@@ -1,65 +1,107 @@
-# Bot Commands
+# Bot 指令總覽
 
-Lomall provides slash commands for Discord interaction.
+Lomall Bot 提供完整的斜線指令（Slash Commands）系統。
 
-## Commands Overview
+## 指令一覽
 
-### `/lomall setup`
+| 指令 | 說明 | 誰可以使用 |
+|------|------|-----------|
+| `/lomall setup` | 初次設定伺服器 | 管理員 |
+| `/lomall dashboard` | 取得儀表板連結 | 所有人 |
+| `/lomall config` | 檢視/修改伺服器設定 | 管理員 |
+| `/ticket create` | 建立新工單 | 所有人 |
+| `/ticket panel` | 發送工單建立按鈕面板 | 管理員 |
+| `/ticket list` | 顯示伺服器工單統計 | 管理員/客服 |
+| `/ticket close` | 關閉指定頻道的工單 | 管理員/客服 |
+| `/ticket info` | 查詢工單詳細資訊 | 管理員/客服 |
 
-Initialize Lomall for your Discord server.
+## 詳細說明
+
+### `/lomall setup` — 初始化伺服器
 
 ```
 /lomall setup
 ```
 
-Creates the guild record in the database and prepares the server for ticket management. Run this once after inviting the bot.
+初次使用 Lomall 時必須執行。系統會：
+- 將伺服器註冊至資料庫
+- 建立預設設定
+- 自動建立 `Tickets` 頻道分類（若不存在）
 
-### `/lomall dashboard`
+**權限需求：** 管理伺服器
 
-Get the web dashboard login link.
+### `/lomall dashboard` — 儀表板連結
 
 ```
 /lomall dashboard
 ```
 
-Returns a link to access the Lomall web dashboard.
+回傳包含儀表板連結的嵌入訊息，點擊後使用 Discord 帳號登入。
 
-### `/lomall config`
+### `/lomall config` — 伺服器設定
 
-View or modify server configuration.
-
+檢視目前設定：
 ```
 /lomall config
 ```
 
-Opens configuration options for SLA, auto-close, and permission settings.
-
-### `/ticket create`
-
-Create a new support ticket.
-
+修改設定：
 ```
-/ticket create subject:<text> category:<category>
+/lomall config setting:sla value:24
 ```
 
-**Parameters:**
+### `/ticket create` — 建立工單
 
-| Option | Required | Description |
-|--------|----------|-------------|
-| `subject` | Yes | Brief description of the issue |
-| `category` | No | Ticket category (general, billing, technical, report, other) |
+```
+/ticket create subject:<標題> category:<分類>
+```
 
-**What happens:**
-1. A private Discord channel is created
-2. Permission overwrites restrict access to the ticket creator and staff
-3. A welcome message is posted in the channel
-4. The ticket appears in the web dashboard
+| 參數 | 必填 | 說明 |
+|------|------|------|
+| `subject` | 是 | 工單標題（1-100 字） |
+| `category` | 否 | 分類：General / Billing / Technical / Report / Other |
 
-## Permission Requirements
+### `/ticket panel` — 工單按鈕面板
 
-| Command | Required Permission |
-|---------|-------------------|
-| `/lomall setup` | Administrator |
-| `/lomall dashboard` | None |
-| `/lomall config` | Administrator |
-| `/ticket create` | None |
+```
+/ticket panel
+```
+
+在當前頻道發送含「🎫 Create Ticket」按鈕的面板。
+
+### `/ticket list` — 工單統計
+
+```
+/ticket list
+```
+
+顯示伺服器的工單數量統計與最近開啟的工單列表。
+
+### `/ticket close` — 關閉工單
+
+```
+/ticket close channel:<頻道ID>
+```
+
+關閉指定頻道的工單，5 秒後自動刪除頻道。若未指定頻道則使用當前頻道。
+
+### `/ticket info` — 工單資訊
+
+```
+/ticket info channel:<頻道ID>
+```
+
+顯示工單的詳細資訊（狀態、分類、優先級、建立時間等）。
+
+## 權限需求
+
+| 指令 | 需求權限 |
+|------|---------|
+| `/lomall setup` | 管理員 |
+| `/lomall config` | 管理員 |
+| `/ticket panel` | 管理員 |
+| `/ticket list` | Support 以上 |
+| `/ticket close` | Support 以上 |
+| `/ticket info` | Support 以上 |
+| `/lomall dashboard` | 無 |
+| `/ticket create` | 無 |

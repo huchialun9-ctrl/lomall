@@ -1,28 +1,28 @@
-# Guilds API
+# 伺服器 API
 
-Manage Discord server configuration.
+管理 Discord 伺服器的設定與配置。
 
-## Get Guild
+## 取得伺服器資料
 
 ```http
 GET /guilds/:discordId
 ```
 
-## Setup Guild
+## 初始化伺服器
 
 ```http
 POST /guilds/:discordId/setup
 Content-Type: application/json
 
 {
-  "name": "Server Name",
-  "icon": "icon_url"
+  "name": "伺服器名稱",
+  "icon": "圖示網址"
 }
 ```
 
-Initializes a guild in the database with default settings.
+將伺服器註冊至資料庫，並初始化預設設定。
 
-## Update Settings
+## 更新設定
 
 ```http
 PUT /guilds/:discordId/settings
@@ -39,12 +39,12 @@ Content-Type: application/json
 }
 ```
 
-Merges with existing settings — only provided fields are updated.
+僅更新有提供的欄位，其餘保持不變。
 
-## Get Audit Logs
+## 取得審計日誌
 
 ```http
 GET /guilds/:discordId/audit-logs
 ```
 
-Returns the 100 most recent audit log entries for the guild.
+回傳該伺服器最近 100 筆審計記錄。

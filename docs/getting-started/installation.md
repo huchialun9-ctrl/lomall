@@ -1,50 +1,50 @@
-# Installation
+# 安裝指南
 
-Detailed installation guide for production and development environments.
+開發環境與正式環境的完整安裝說明。
 
-## Development Setup
+## 開發環境
 
-### System Requirements
+### 系統需求
 
-- **OS**: Windows 10+, macOS 12+, or Linux
-- **Runtime**: Node.js 22.x or later
-- **Database**: PostgreSQL 15+
-- **Package Manager**: npm 10+
+- **作業系統**：Windows 10+、macOS 12+ 或 Linux
+- **執行環境**：Node.js 22.x 或更新版本
+- **資料庫**：PostgreSQL 15+
+- **套件管理**：npm 10+
 
-### Database Setup
+### 資料庫設定
 
 ```bash
-# Create the database
+# 建立資料庫
 createdb lomall
 
-# Push the Prisma schema
+# 推送 Prisma Schema 至資料庫
 npm run prisma:push
 
-# (Optional) Open Prisma Studio to inspect data
+# （可選）開啟 Prisma Studio 圖形化介面
 npm run prisma:studio
 ```
 
-### Discord Application Setup
+### Discord 應用程式設定
 
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Create a new application
-3. Go to **Bot** → **Add Bot**
-4. Copy the token under **Bot** section
-5. Go to **OAuth2** → **General** and copy Client ID and Client Secret
-6. Add redirect URL: `http://localhost:4000/auth/discord/callback`
-7. In **OAuth2** → **URL Generator**, select `bot` and `identify` scopes
-8. Use the generated URL to invite the bot to your server
+1. 前往 [Discord Developer Portal](https://discord.com/developers/applications)
+2. 建立新的應用程式
+3. 進入 **Bot** → **Add Bot**
+4. 複製 Bot Token
+5. 進入 **OAuth2** → **General**，複製 Client ID 與 Client Secret
+6. 設定重新導向網址：`http://localhost:4000/auth/discord/callback`
+7. 在 **OAuth2** → **URL Generator** 勾選 `bot` 與 `identify` 權限
+8. 使用產生的網址將 Bot 邀請至伺服器
 
-## Production Build
+## 正式環境
 
 ```bash
-# Build all packages
+# 建置所有套件
 npm run build:shared
 npm run build:api
 npm run build:bot
 npm run build:web
 
-# Start production services
+# 啟動正式服務
 npm run start:api
 npm run start:bot
 npm run start:web

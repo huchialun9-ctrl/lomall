@@ -1,20 +1,20 @@
 # Lomall
 
-**Professional Discord Ticket Management System**
+**專業級 Discord 工單管理系統**
 
-Lomall bridges the gap between Discord communities and enterprise-grade customer support. By combining Discord bot automation with a powerful web dashboard, Lomall delivers a seamless ticket management experience.
+Lomall 為 Discord 社群提供企業等級的工單管理解決方案。透過 Discord Bot 自動化與網頁儀表板的深度結合，實現高效、透明且可追溯的客服流程。
 
-## Features
+## 功能特色
 
-- **Bot Automation** — One-click ticket creation via Discord buttons and slash commands
-- **Private Channels** — Automatic private channel creation with proper permission overwrites
-- **Web Dashboard** — Real-time ticket overview, messaging, and management from your browser
-- **Transcript System** — Automatic HTML archive generation when tickets are closed
-- **Role-Based Access** — Granular permission control (Admin / Support / Viewer)
-- **Audit Logs** — Complete history of every action taken
-- **Real-Time Sync** — Socket.io powered instant updates across Discord and Web
+- **Bot 自動化** — 按鈕與斜線指令一鍵建立工單
+- **私密頻道** — 自動建立專屬頻道，嚴格的權限隔離
+- **網頁儀表板** — 即時工單總覽、對話管理，跨平台操作
+- **轉存系統** — 結案時自動產生 HTML 封存檔，永久保存
+- **角色權限** — Admin / Support / Viewer 分級管理
+- **審計日誌** — 完整記錄每一筆操作，責任歸屬明確
+- **即時同步** — Socket.io 驅動 Discord 與網頁雙向即時更新
 
-## Architecture
+## 系統架構
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
@@ -24,19 +24,19 @@ Lomall bridges the gap between Discord communities and enterprise-grade customer
                            │
 ┌─────────────┐     ┌──────┴──────┐
 │  Next.js    │◀────│  Socket.io  │
-│  Dashboard  │     │  (Real-time)│
+│  儀表板     │     │  (即時推播) │
 │  (Port 3000)│     └─────────────┘
 └─────────────┘
 ```
 
-## Tech Stack
+## 技術堆疊
 
-| Component | Technology |
-|-----------|-----------|
-| Language  | TypeScript (full-stack) |
-| Backend   | NestJS |
-| Frontend  | Next.js + Tailwind CSS |
-| Database  | PostgreSQL + Prisma ORM |
-| Real-time | Socket.io |
-| Auth      | Discord OAuth2 |
-| Bot       | discord.js v14 |
+| 元件 | 技術 |
+|------|------|
+| 開發語言 | TypeScript（全端統一） |
+| 後端框架 | NestJS |
+| 前端框架 | Next.js + Tailwind CSS |
+| 資料庫 | PostgreSQL + Prisma ORM |
+| 即時通訊 | Socket.io |
+| 驗證 | Discord OAuth2 |
+| Bot | discord.js v14 |
