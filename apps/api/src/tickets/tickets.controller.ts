@@ -17,6 +17,11 @@ export class TicketsController {
     return this.tickets.findAll(guildId, status);
   }
 
+  @Get('channel/:channelId')
+  findByChannel(@Param('channelId') channelId: string) {
+    return this.tickets.findByChannelId(channelId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tickets.findOne(id);

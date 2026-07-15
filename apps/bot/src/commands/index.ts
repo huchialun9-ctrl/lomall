@@ -64,6 +64,33 @@ export function registerCommands(): CommandBuilder[] {
         sub
           .setName('panel')
           .setDescription('Send the ticket creation panel to this channel'),
+      )
+      .addSubcommand((sub) =>
+        sub
+          .setName('list')
+          .setDescription('List your recent tickets'),
+      )
+      .addSubcommand((sub) =>
+        sub
+          .setName('close')
+          .setDescription('Close a ticket by channel ID')
+          .addStringOption((opt) =>
+            opt
+              .setName('channel')
+              .setDescription('The ticket channel ID or mention')
+              .setRequired(false),
+          ),
+      )
+      .addSubcommand((sub) =>
+        sub
+          .setName('info')
+          .setDescription('Show ticket information')
+          .addStringOption((opt) =>
+            opt
+              .setName('channel')
+              .setDescription('The ticket channel ID or mention')
+              .setRequired(false),
+          ),
       ),
   ];
 }
