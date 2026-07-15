@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  discordId     String   @unique @map("discord_id")
+  username      String
+  avatar        String?
+  email         String?
+  accessToken   String?  @map("access_token")
+  refreshToken  String?  @map("refresh_token")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  tickets       Ticket[]
+  messages      Message[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+model Guild {
+  id            String   @id @default(uuid())
+  discordId     String   @unique @map("discord_id")
+  name          String
+  icon          String?
+  settings      Json?    @default("{}")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  tickets       Ticket[]
+  auditLogs     AuditLog[]
+
+  @@map("guilds")
+}
+
+enum TicketStatus {
+  open
+  resolved
+  closed
+}
+
+model Ticket {
+  id            String       @id @default(uuid())
+  channelId     String       @unique @map("channel_id")
+  guildId       String       @map("guild_id")
+  userId        String       @map("user_id")
+  subject       String
+  status        TicketStatus @default(open)
+  category      String?
+  priority      String?      @default("normal")
+  assignedTo    String?      @map("assigned_to")
+  transcript    String?
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  closedAt      DateTime?    @map("closed_at")
+
+  guild         Guild        @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages      Message[]
+  auditLogs     AuditLog[]
+
+  @@map("tickets")
+}
+
+model Message {
+  id            String   @id @default(uuid())
+  ticketId      String   @map("ticket_id")
+  userId        String   @map("user_id")
+  content       String
+  isStaff       Boolean  @default(false) @map("is_staff")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  ticket        Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+enum AuditAction {
+  ticket_create
+  ticket_close
+  ticket_reopen
+  ticket_assign
+  message_delete
+  settings_update
+}
+
+model AuditLog {
+  id            String      @id @default(uuid())
+  ticketId      String?     @map("ticket_id")
+  guildId       String      @map("guild_id")
+  userId        String      @map("user_id")
+  action        AuditAction
+  details       Json?
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  ticket        Ticket?     @relation(fields: [ticketId], references: [id], onDelete: SetNull)
+  guild         Guild       @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("audit_logs")
+}

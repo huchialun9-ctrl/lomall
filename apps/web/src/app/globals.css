@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root {
+  --discord-blurple: #5865f2;
+  --discord-green: #57f287;
+  --discord-red: #ed4245;
+  --discord-yellow: #fee75c;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
