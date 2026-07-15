@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: lomall-api
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm ci && npx prisma generate && npm run build -w packages/shared && npm run build -w apps/api
+    startCommand: node apps/api/dist/main.js
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: NODE_VERSION
+        value: 20
+
+  - type: web
+    name: lomall-web
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm ci && npm run build -w packages/shared && npm run build -w apps/web
+    startCommand: npm run start -w apps/web
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXTAUTH_SECRET
+        sync: false
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: NODE_VERSION
+        value: 20
+
+  - type: worker
+    name: lomall-bot
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm ci && npm run build -w packages/shared && npm run build -w apps/bot
+    startCommand: node apps/bot/dist/main.js
+    envVars:
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: API_URL
+        sync: false
+      - key: NODE_VERSION
+        value: 20
