@@ -7,10 +7,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 let socket: Socket | null = null;
 
 export function getSocket(guildId?: string): Socket {
-  if (!socket) {
+  if (!socket || !socket.connected) {
     socket = io(API_URL, {
       query: guildId ? { guildId } : undefined,
       transports: ['websocket', 'polling'],
+      autoConnect: true,
     });
   }
   return socket;
