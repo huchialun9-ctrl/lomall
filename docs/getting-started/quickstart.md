@@ -2,6 +2,31 @@
 
 5 分鐘內讓 Lomall 在您的 Discord 伺服器上線。
 
+---
+
+## 快速連結
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <p><strong>🤖 邀請 Lomall Bot</strong></p>
+      <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands">
+        <strong>🔗 點此邀請至 Discord</strong>
+      </a>
+      <br/><sub>（將 <code>YOUR_CLIENT_ID</code> 換為你的 Client ID）</sub>
+    </td>
+    <td width="50%" align="center">
+      <p><strong>🌐 開啟管理儀表板</strong></p>
+      <a href="http://localhost:3000/login">
+        <strong>🔗 點此前往登入</strong>
+      </a>
+      <br/><sub>（本機開發：localhost:3000，正式部署請替換網址）</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 前置需求
 
 - Node.js 22+
