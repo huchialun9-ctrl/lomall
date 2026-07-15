@@ -16,7 +16,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  const port = process.env.API_PORT || 4000;
+  const port = process.env.PORT || process.env.API_PORT || 4000;
   await app.listen(port);
   console.log(`API running on http://localhost:${port}`);
 }
