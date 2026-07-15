@@ -17,10 +17,10 @@
     </td>
     <td width="50%" align="center">
       <p><strong>🌐 開啟管理儀表板</strong></p>
-      <a href="http://localhost:3000/login">
-        <strong>🔗 點此前往登入</strong>
+      <a href="https://lu0-1.gitbook.io/lomalltw">
+        <strong>🔗 點此前往文檔</strong>
       </a>
-      <br/><sub>（本機開發：localhost:3000，正式部署請替換網址）</sub>
+      <br/><sub>📘 Lomall 完整文檔網站</sub>
     </td>
   </tr>
 </table>
@@ -87,7 +87,7 @@ npm run dev:web
 /lomall setup
 ```
 
-開啟瀏覽器前往 `http://localhost:3000` 存取儀表板。
+開啟瀏覽器前往文檔網站 `https://lu0-1.gitbook.io/lomalltw` 查看完整說明。
 
 ---
 

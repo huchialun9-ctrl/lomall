@@ -6,7 +6,7 @@ Lomall Bot 提供完整的斜線指令（Slash Commands）系統。
 
 > **🤖 還沒邀請 Bot？** [點此邀請至 Discord](https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands)（將 `YOUR_CLIENT_ID` 替換為你的 Discord 應用程式 ID）
 >
-> **🌐 想用網頁管理？** [開啟管理儀表板](http://localhost:3000/login)
+> **🌐 完整文檔？** [前往 Lomall 文檔網站](https://lu0-1.gitbook.io/lomalltw)
 
 ---
 

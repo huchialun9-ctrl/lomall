@@ -24,11 +24,11 @@ Lomall 為 Discord 社群提供企業等級的工單管理解決方案。透過 
       <p><strong>🌐 開啟管理儀表板</strong></p>
       <p>登入網頁後台管理工單</p>
       <p>
-        <a href="http://localhost:3000/login">
-          <strong>🔗 前往儀表板</strong>
+        <a href="https://lu0-1.gitbook.io/lomalltw">
+          <strong>🔗 前往文檔網站</strong>
         </a>
       </p>
-      <p><sub>※ 本機開發預設為 <code>localhost:3000</code>，正式部署請替換為實際網址</sub></p>
+      <p><sub>📘 Lomall 完整文檔</sub></p>
     </td>
   </tr>
 </table>
