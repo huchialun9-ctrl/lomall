@@ -9,8 +9,9 @@
   },
   "dependencies": {
     "@lomall/shared": "*",
+    "axios": "^1.7.0",
     "discord.js": "^14.18.0",
-    "axios": "^1.7.0"
+    "dotenv": "^16.6.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

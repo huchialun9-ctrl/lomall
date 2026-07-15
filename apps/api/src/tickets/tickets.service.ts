@@ -6,8 +6,26 @@ import { CreateTicketDto, SendMessageDto } from '@lomall/shared';
 export class TicketsService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(guildId: string, status?: string) {
-    const where: any = { guildId };
+  private async resolveGuild(discordId: string) {
+    const guild = await this.prisma.guild.findUnique({ where: { discordId } });
+    if (!guild) throw new NotFoundException('Guild not registered. Run /lomall setup first.');
+    return guild;
+  }
+
+  private async resolveOrCreateUser(discordId: string, username?: string) {
+    return this.prisma.user.upsert({
+      where: { discordId },
+      update: { username: username || `discord-${discordId}` },
+      create: {
+        discordId,
+        username: username || `discord-${discordId}`,
+      },
+    });
+  }
+
+  async findAll(guildDiscordId: string, status?: string) {
+    const guild = await this.resolveGuild(guildDiscordId);
+    const where: any = { guildId: guild.id };
     if (status) where.status = status;
     return this.prisma.ticket.findMany({
       where,
@@ -26,14 +44,14 @@ export class TicketsService {
   }
 
   async create(dto: CreateTicketDto) {
-    const guild = await this.prisma.guild.findUnique({ where: { discordId: dto.guildId } });
-    if (!guild) throw new NotFoundException('Guild not registered');
+    const guild = await this.resolveGuild(dto.guildId);
+    const user = await this.resolveOrCreateUser(dto.userId);
 
     const ticket = await this.prisma.ticket.create({
       data: {
         channelId: `pending-${Date.now()}`,
         guildId: guild.id,
-        userId: dto.userId,
+        userId: user.id,
         subject: dto.subject,
         category: dto.category,
         priority: dto.priority,
@@ -45,7 +63,7 @@ export class TicketsService {
       data: {
         ticketId: ticket.id,
         guildId: guild.id,
-        userId: dto.userId,
+        userId: user.id,
         action: 'ticket_create',
       },
     });
@@ -53,8 +71,12 @@ export class TicketsService {
     return ticket;
   }
 
-  async close(id: string, userId: string) {
-    const ticket = await this.prisma.ticket.update({
+  async close(id: string, userDiscordId: string) {
+    const ticket = await this.prisma.ticket.findUnique({ where: { id } });
+    if (!ticket) throw new NotFoundException('Ticket not found');
+    const user = await this.resolveOrCreateUser(userDiscordId);
+
+    const updated = await this.prisma.ticket.update({
       where: { id },
       data: { status: 'closed', closedAt: new Date() },
       include: { user: true },
@@ -64,16 +86,20 @@ export class TicketsService {
       data: {
         ticketId: id,
         guildId: ticket.guildId,
-        userId,
+        userId: user.id,
         action: 'ticket_close',
       },
     });
 
-    return ticket;
+    return updated;
   }
 
-  async reopen(id: string, userId: string) {
-    const ticket = await this.prisma.ticket.update({
+  async reopen(id: string, userDiscordId: string) {
+    const ticket = await this.prisma.ticket.findUnique({ where: { id } });
+    if (!ticket) throw new NotFoundException('Ticket not found');
+    const user = await this.resolveOrCreateUser(userDiscordId);
+
+    const updated = await this.prisma.ticket.update({
       where: { id },
       data: { status: 'open', closedAt: null },
       include: { user: true },
@@ -83,16 +109,20 @@ export class TicketsService {
       data: {
         ticketId: id,
         guildId: ticket.guildId,
-        userId,
+        userId: user.id,
         action: 'ticket_reopen',
       },
     });
 
-    return ticket;
+    return updated;
   }
 
-  async assign(id: string, assignedTo: string, userId: string) {
-    const ticket = await this.prisma.ticket.update({
+  async assign(id: string, assignedTo: string, userDiscordId: string) {
+    const user = await this.resolveOrCreateUser(userDiscordId);
+    const ticket = await this.prisma.ticket.findUnique({ where: { id } });
+    if (!ticket) throw new NotFoundException('Ticket not found');
+
+    const updated = await this.prisma.ticket.update({
       where: { id },
       data: { assignedTo },
       include: { user: true },
@@ -102,20 +132,22 @@ export class TicketsService {
       data: {
         ticketId: id,
         guildId: ticket.guildId,
-        userId,
+        userId: user.id,
         action: 'ticket_assign',
         details: { assignedTo },
       },
     });
 
-    return ticket;
+    return updated;
   }
 
   async sendMessage(ticketId: string, dto: SendMessageDto) {
+    const user = await this.resolveOrCreateUser(dto.userId);
+
     const message = await this.prisma.message.create({
       data: {
         ticketId,
-        userId: dto.userId,
+        userId: user.id,
         content: dto.content,
         isStaff: dto.isStaff,
       },
@@ -140,12 +172,7 @@ export class TicketsService {
     });
   }
 
-  async getAuditLogs(guildId: string) {
-    return this.prisma.auditLog.findMany({
-      where: { guildId },
-      include: { user: true, ticket: true },
-      orderBy: { createdAt: 'desc' },
-      take: 50,
-    });
+  async findByChannelId(channelId: string) {
+    return this.prisma.ticket.findFirst({ where: { channelId } });
   }
 }

@@ -1,6 +1,11 @@
-import { Client, GatewayIntentBits, Routes, REST, SlashCommandBuilder } from 'discord.js';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+
+import { Client, GatewayIntentBits, Routes, REST } from 'discord.js';
 import { registerCommands } from './commands';
 import { handleInteraction } from './handlers/interaction';
+import { handleMessage } from './handlers/message';
 
 const client = new Client({
   intents: [
@@ -29,6 +34,10 @@ client.once('ready', async () => {
 
 client.on('interactionCreate', async (interaction) => {
   await handleInteraction(interaction, client);
+});
+
+client.on('messageCreate', async (message) => {
+  await handleMessage(message, client);
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN!).catch(console.error);

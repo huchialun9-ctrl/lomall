@@ -1,9 +1,6 @@
-import { SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 
-export type CommandBuilder =
-  | SlashCommandBuilder
-  | SlashCommandSubcommandsOnlyBuilder
-  | SlashCommandOptionsOnlyBuilder;
+export type CommandBuilder = SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder;
 
 export function registerCommands(): CommandBuilder[] {
   return [
@@ -19,7 +16,24 @@ export function registerCommands(): CommandBuilder[] {
       .addSubcommand((sub) =>
         sub
           .setName('config')
-          .setDescription('View or modify server configuration'),
+          .setDescription('View or modify server configuration')
+          .addStringOption((opt) =>
+            opt
+              .setName('setting')
+              .setDescription('Setting to view or modify')
+              .setRequired(false)
+              .addChoices(
+                { name: 'SLA (hours)', value: 'sla' },
+                { name: 'Auto-close', value: 'autoClose' },
+                { name: 'Auto-close (hours)', value: 'autoCloseHours' },
+              ),
+          )
+          .addStringOption((opt) =>
+            opt
+              .setName('value')
+              .setDescription('New value for the setting')
+              .setRequired(false),
+          ),
       ),
 
     new SlashCommandBuilder()
@@ -45,6 +59,11 @@ export function registerCommands(): CommandBuilder[] {
                 { name: 'Other', value: 'other' },
               ),
           ),
+      )
+      .addSubcommand((sub) =>
+        sub
+          .setName('panel')
+          .setDescription('Send the ticket creation panel to this channel'),
       ),
   ];
 }

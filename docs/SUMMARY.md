@@ -8,6 +8,7 @@
 
 ## Guide
 - [Bot Commands](guide/bot-commands.md)
+- [Bot Discord 中文使用說明](guide/bot-usage.md)
 - [Ticket Workflow](guide/ticket-workflow.md)
 - [Dashboard Guide](guide/dashboard.md)
 - [Permission System](guide/permissions.md)
